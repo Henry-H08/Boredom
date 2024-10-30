@@ -29,20 +29,15 @@ function doSomeCalcs() {
             i += 2n;
         }
         const pistr16 = pi.toString(16);
-        document.getElementById('terms').innerHTML = ((i - 1n) / 2n).toString();
-        document.getElementById('dcount').innerHTML = (((pistr16.length - x.toString(16).length) * 1.20412) - 20).toFixed(0);
 
         document.getElementById('digits').innerHTML = pistr16.replace(/.{10}/g, "$& ");
         document.getElementById('elapsed').innerHTML = ((new Date() - startTime)/1000).toFixed(3) + " s";
 
         setTimeout(doSomeCalcs, 0);
     } else {
-        // After the last calculation, show in decimal
         const base10start = new Date();
         const pistr10 = (pi / (10n ** 20n)).toString(10);
-        document.getElementById('dcount').innerHTML = (pistr10.length - 1).toFixed(0);
         document.getElementById('digits').innerHTML = pistr10.replace(/.{10}/g, "$& ");
-        document.getElementById('base10').innerHTML = ((new Date() - base10start)/1000).toFixed(3) + " s";
     }
 }
 
@@ -61,7 +56,7 @@ document.getElementById('start').onclick = function() {
     if (digitsnum >= 1) {
         startCalcs(digitsnum);
     } else {
-        alert("Please enter a valid number of digits.");
+        alert("Not a valid number of digits.");
     }
 
     return false;
