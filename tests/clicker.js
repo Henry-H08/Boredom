@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Game with Side Shop</title>
-    <link href="style.css" rel="stylesheet"></head>
-</head>
-<body>
-    <script>
-        let score = 0;
+let score = 0;
         let autoClickers = 0;
 
         function incrementScore() {
@@ -50,23 +40,3 @@
             const shop = document.getElementById('shop');
             shop.style.display = shop.style.display === 'none' ? 'block' : 'none';
         }
-    </script>
-    <div class="game-container">
-        <button class="button" onclick="incrementScore()">Click Me!</button>
-        <div class="score" id="score">Score: 0</div>
-        <button class="button" onclick="toggleShop()">Open Shop</button>
-        <div class="shop" id="shop">
-            <div class="shop-item">
-                <button class="button" onclick="buyItem('item1', 10)">Buy Item 1 (Cost: 10 points)</button>
-            </div>
-            <div class="shop-item">
-                <button class="button" onclick="buyItem('item2', 20)">Buy Item 2 (Cost: 20 points)</button>
-            </div>
-            <div class="shop-item">
-                <button class="button" onclick="buyAutoClicker()">Buy Auto-Clicker (Cost: 50 points)</button>
-            </div>
-            <button class="close-button" onclick="toggleShop()">Close Shop</button>
-        </div>
-    </div>
-</body>
-</html>
