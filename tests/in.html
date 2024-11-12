@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game with Side Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .game-container {
+            text-align: center;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #6200ea;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #3700b3;
+        }
+        .score {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        .shop {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 50px;
+            width: 200px;
+            background-color: #ffffff;
+            border: 2px solid #6200ea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .shop-item {
+            margin-top: 10px;
+        }
+        .close-button {
+            margin-top: 20px;
+            background-color: #6200ea;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <button class="button" onclick="incrementScore()">Click Me!</button>
+        <div class="score" id="score">Score: 0</div>
+        <button class="button" onclick="toggleShop()">Open Shop</button>
+        <div class="shop" id="shop">
+            <div class="shop-item">
+                <button class="button" onclick="buyItem('item1', 10)">Buy Item 1 (Cost: 10 points)</button>
+            </div>
+            <div class="shop-item">
+                <button class="button" onclick="buyItem('item2', 20)">Buy Item 2 (Cost: 20 points)</button>
+            </div>
+            <div class="shop-item">
+                <button class="button" onclick="buyAutoClicker()">Buy Auto-Clicker (Cost: 50 points)</button>
+            </div>
+            <button class="close-button" onclick="toggleShop()">Close Shop</button>
+        </div>
+    </div>
+    <script>
+        let score = 0;
+        let autoClickers = 0;
+
+        function incrementScore() {
+            score++;
+            document.getElementById('score').innerText = 'Score: ' + score;
+        }
+
+        function buyItem(item, cost) {
+            if (score >= cost) {
+                score -= cost;
+                document.getElementById('score').innerText = 'Score: ' + score;
+                alert(item + ' purchased!');
+            } else {
+                alert('Not enough points!');
+            }
+        }
+
+        function buyAutoClicker() {
+            const cost = 50;
+            if (score >= cost) {
+                score -= cost;
+                autoClickers++;
+                document.getElementById('score').innerText = 'Score: ' + score;
+                alert('Auto-Clicker purchased!');
+                startAutoClicker();
+            } else {
+                alert('Not enough points!');
+            }
+        }
+
+        function startAutoClicker() {
+            setInterval(() => {
+                score += autoClickers;
+                document.getElementById('score').innerText = 'Score: ' + score;
+            }, 1000);
+        }
+
+        function toggleShop() {
+            const shop = document.getElementById('shop');
+            shop.style.display = shop.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
