@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Game with Shooting Triangles</title>
+    <title>Clicker Game with Spinning Image</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,12 +19,9 @@
             text-align: center;
             position: relative;
         }
-        .triangle {
-            width: 0;
-            height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-bottom: 300px solid #6200ea;
+        .triangle-image {
+            width: 150px;
+            height: 150px;
             animation: spin 3s infinite linear;
             cursor: pointer;
             transform-origin: center;
@@ -107,7 +104,7 @@
 </head>
 <body>
     <div class="game-container">
-        <div class="triangle" onclick="incrementScore(); createTriangles()"></div>
+        <img src="your-image-url-here" class="triangle-image" onclick="incrementScore(); createTriangles()" alt="Spinning Triangle">
         <div class="score" id="score">Score: 0</div>
     </div>
     <div class="shop" id="shop">
@@ -169,7 +166,7 @@
                 const smallTriangle = document.createElement('div');
                 smallTriangle.classList.add('small-triangle');
                 const angle = Math.random() * 360;
-                const distance = 500 + Math.random() * 100;
+                const distance = 100 + Math.random() * 100;
                 smallTriangle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
                 smallTriangle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
                 smallTriangle.style.left = `calc(50% - 15px)`; // Center horizontally relative to the big triangle
