@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Game with Styled Shop</title>
+    <title>Clicker Game with Shooting Triangles</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,6 +17,7 @@
         }
         .game-container {
             text-align: center;
+            position: relative;
         }
         .triangle {
             width: 0;
@@ -29,6 +30,15 @@
             transform-origin: center;
             margin-top: 50px;
         }
+        .small-triangle {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid #6200ea;
+            position: absolute;
+            animation: fly 1s linear forwards;
+        }
         @keyframes spin {
             from {
                 transform: rotate(0deg);
@@ -37,8 +47,17 @@
                 transform: rotate(360deg);
             }
         }
+        @keyframes fly {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: translate(var(--x), var(--y));
+            }
+        }
         .score {
-            margin-top: 80px; /* Increased margin to move text down */
+            margin-top: 80px;
             font-size: 24px;
         }
         .shop {
@@ -88,7 +107,7 @@
 </head>
 <body>
     <div class="game-container">
-        <div class="triangle" onclick="incrementScore()"></div>
+        <div class="triangle" onclick="incrementScore(); createTriangles()"></div>
         <div class="score" id="score">Score: 0</div>
     </div>
     <div class="shop" id="shop">
@@ -142,6 +161,22 @@
                 score += autoClickers;
                 document.getElementById('score').innerText = 'Score: ' + score;
             }, 1000);
+        }
+
+        function createTriangles() {
+            const gameContainer = document.querySelector('.game-container');
+            for (let i = 0; i < 5; i++) {
+                const smallTriangle = document.createElement('div');
+                smallTriangle.classList.add('small-triangle');
+                const angle = Math.random() * 360;
+                const distance = 500 + Math.random() * 100;
+                smallTriangle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+                smallTriangle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+                smallTriangle.style.left = `calc(50% - 15px)`; // Center horizontally relative to the big triangle
+                smallTriangle.style.top = `calc(50% - 15px)`; // Center vertically relative to the big triangle
+                gameContainer.appendChild(smallTriangle);
+                setTimeout(() => gameContainer.removeChild(smallTriangle), 1000);
+            }
         }
     </script>
 </body>
