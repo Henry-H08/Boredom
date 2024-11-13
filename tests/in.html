@@ -3,10 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Game with Side Shop</title>
-    <link href="style.css" rel="stylesheet"></head>
+    <title>Clicker Game with Styled Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .game-container {
+            text-align: center;
+        }
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 300px solid #6200ea;
+            animation: spin 3s infinite linear;
+            cursor: pointer;
+            transform-origin: center;
+            margin-top: 50px;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .score {
+            margin-top: 80px; /* Increased margin to move text down */
+            font-size: 24px;
+        }
+        .shop {
+            position: absolute;
+            right: 20px;
+            top: 50px;
+            width: 300px;
+            background-color: #ffffff;
+            border: 2px solid #6200ea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .shop-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #6200ea;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .shop-item:hover {
+            background-color: #3700b3;
+        }
+        .shop-item span {
+            flex: 1;
+            text-align: left;
+        }
+        .shop-item button {
+            background-color: #ffffff;
+            color: #6200ea;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .shop-item button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
+    <div class="game-container">
+        <div class="triangle" onclick="incrementScore()"></div>
+        <div class="score" id="score">Score: 0</div>
+    </div>
+    <div class="shop" id="shop">
+        <div class="shop-item" onclick="buyItem('item1', 10)">
+            <span>Buy Item 1</span>
+            <button>10 points</button>
+        </div>
+        <div class="shop-item" onclick="buyItem('item2', 20)">
+            <span>Buy Item 2</span>
+            <button>20 points</button>
+        </div>
+        <div class="shop-item" onclick="buyAutoClicker()">
+            <span>Buy Auto-Clicker</span>
+            <button>50 points</button>
+        </div>
+    </div>
     <script>
         let score = 0;
         let autoClickers = 0;
@@ -45,28 +143,6 @@
                 document.getElementById('score').innerText = 'Score: ' + score;
             }, 1000);
         }
-
-        function toggleShop() {
-            const shop = document.getElementById('shop');
-            shop.style.display = shop.style.display === 'none' ? 'block' : 'none';
-        }
     </script>
-    <div class="game-container">
-        <button class="button" onclick="incrementScore()">Click Me!</button>
-        <div class="score" id="score">Score: 0</div>
-        <button class="button" onclick="toggleShop()">Open Shop</button>
-        <div class="shop" id="shop">
-            <div class="shop-item">
-                <button class="button" onclick="buyItem('item1', 10)">Buy Item 1 (Cost: 10 points)</button>
-            </div>
-            <div class="shop-item">
-                <button class="button" onclick="buyItem('item2', 20)">Buy Item 2 (Cost: 20 points)</button>
-            </div>
-            <div class="shop-item">
-                <button class="button" onclick="buyAutoClicker()">Buy Auto-Clicker (Cost: 50 points)</button>
-            </div>
-            <button class="close-button" onclick="toggleShop()">Close Shop</button>
-        </div>
-    </div>
 </body>
 </html>
