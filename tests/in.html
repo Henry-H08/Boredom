@@ -55,7 +55,7 @@
                 transform: translate(var(--x), var(--y));
             }
         }
-        .score {
+        .money {
             margin-top: 80px;
             font-size: 24px;
         }
@@ -124,28 +124,28 @@
 </head>
 <body>
     <div class="game-container">
-        <img src="donut.png" class="triangle-image" onclick="incrementScore(); createTriangles()" alt="Spinning Triangle">
-        <div class="score" id="score">Score: 0</div>
+        <img src="donut.png" class="triangle-image" onclick="incrementMoney(); createTriangles()" alt="Spinning Triangle">
+        <div class="money" id="money">Money: 0</div>
     </div>
     <div class="shop" id="shop">
         <div class="shop-item" onclick="buyItem('item1', 10)">
             <img src="donut.png" alt="Item 1 Icon">
             <span>Buy Item 1</span>
-            <button>10 points</button>
+            <button>$10</button>
         </div>
         <div class="shop-item" onclick="buyAutoClicker()">
             <img src="donut.png" alt="Auto-Clicker Icon">
             <span>Buy Auto-Clicker</span>
-            <button>50 points</button>
+            <button>$50</button>
         </div>
     </div>
     <script>
-        let score = 0;
+        let money = 0;
         let autoClickers = 0;
 
-        function incrementScore() {
-            score++;
-            document.getElementById('score').innerText = 'Score: ' + score;
+        function incrementMoney() {
+            money++;
+            document.getElementById('money').innerText = 'Money: ' + money;
         }
 
         function showNotification(message) { 
@@ -156,9 +156,9 @@
         }
 
         function buyItem(item, cost) {
-            if (score >= cost) {
-                score -= cost;
-                document.getElementById('score').innerText = 'Score: ' + score;
+            if (money >= cost) {
+                money -= cost;
+                document.getElementById('money').innerText = 'Money: ' + money;
                 alert(item + ' purchased!');
             } else {
                 alert('Not enough points!');
@@ -167,10 +167,10 @@
 
         function buyAutoClicker() {
             const cost = 50;
-            if (score >= cost) {
-                score -= cost;
+            if (money >= cost) {
+                money -= cost;
                 autoClickers++;
-                document.getElementById('score').innerText = 'Score: ' + score;
+                document.getElementById('money').innerText = 'Money: ' + money;
                 alert('Auto-Clicker purchased!');
                 startAutoClicker();
             } else {
@@ -180,8 +180,8 @@
 
         function startAutoClicker() {
             setInterval(() => {
-                score += autoClickers;
-                document.getElementById('score').innerText = 'Score: ' + score;
+                money += autoClickers;
+                document.getElementById('money').innerText = 'Money: ' + money;
             }, 1000);
         }
 
@@ -195,7 +195,7 @@
                 const distance = 100 + Math.random() * 100;
                 smallTriangle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
                 smallTriangle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
-                smallTriangle.style.left = `calc(50% - 15px)`; // Center horizontally relative to the big triangle
+                smallTriangle.style.left = `calc(50% - 15px)`; 
                 smallTriangle.style.top = `calc(50% - 15px)`; 
                 gameContainer.appendChild(smallTriangle);
                 setTimeout(() => gameContainer.removeChild(smallTriangle), 1000);
