@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Game with Pixel Art Shop</title>
+    <title>Clicker Game</title>
     <style>
         body {
             font-family: 'Press Start 2P', cursive;
@@ -19,7 +19,7 @@
             text-align: center;
             position: relative;
         }
-        .triangle-image {
+        .donut-image {
             width: 100%;
             height: 100%;
             animation: spin 3s infinite linear;
@@ -124,7 +124,7 @@
 </head>
 <body>
     <div class="game-container">
-        <img src="donut.png" class="triangle-image" onclick="incrementMoney(); createTriangles()" alt="Spinning Triangle">
+        <img src="donut.png" class="donut-image" onclick="incrementMoney(); createTriangles()" alt="Spinning Donut">
         <div class="money" id="money">Money: 0</div>
     </div>
     <div class="shop" id="shop">
