@@ -25,7 +25,7 @@
             animation: spin 3s infinite linear;
             cursor: pointer;
             transform-origin: center;
-            margin-top: 10%;
+            margin-top: 0%;
             z-index: 5;
         }
         .small-triangle {
@@ -124,17 +124,17 @@
 </head>
 <body>
     <div class="game-container">
-        <img src="images/Untitled design.png" class="donut-image" onclick="incrementMoney(); createTriangles()" alt="Spinning Donut">
+        <img src="images/donut.png" class="donut-image" onclick="incrementMoney(); createTriangles()" alt="Spinning Donut">
         <div class="money" id="money">Money: 0</div>
     </div>
     <div class="shop" id="shop">
         <div class="shop-item" onclick="buyItem('item1', 10)">
-            <img src="donut.png" alt="Item 1 Icon">
+            <img src="images/donut.png" alt="Item 1 Icon">
             <span>Buy Item 1</span>
             <button>$10</button>
         </div>
         <div class="shop-item" onclick="buyAutoClicker()">
-            <img src="donut.png" alt="Auto-Clicker Icon">
+            <img src="images/donut.png" alt="Auto-Clicker Icon">
             <span>Buy Auto-Clicker</span>
             <button>$50</button>
         </div>
