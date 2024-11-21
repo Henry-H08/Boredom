@@ -20,8 +20,8 @@
             position: relative;
         }
         .donut-image {
-            width: 100%;
-            height: 100%;
+            width: 80%;
+            height: auto;
             animation: spin 3s infinite linear;
             cursor: pointer;
             transform-origin: center;
@@ -139,6 +139,7 @@
             <button>$50</button>
         </div>
     </div>
+    <p id="a1"></p>
     <script>
         let money = 0;
         let autoClickers = 0;
@@ -200,7 +201,11 @@
                 gameContainer.appendChild(smallTriangle);
                 setTimeout(() => gameContainer.removeChild(smallTriangle), 1000);
             }
-        }
+        } 
+if (money >= 10) { 
+  document.getElementById("a1").innerText = "The variable is exactly 10!"; 
+} 
+
     </script>
 </body>
 </html>
