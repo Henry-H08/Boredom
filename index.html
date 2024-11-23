@@ -12,31 +12,33 @@
             align-items: center;
             flex-direction: column;
             height: 100vh;
-            background-color: #f0f0f0;
             margin: 0;
+            background-color: #EBEBEB;
         }
         .game-container {
             text-align: center;
-            position: relative;
+            position: absolute;
         }
         .donut-image {
             width: 80%;
             height: auto;
             animation: spin 3s infinite linear;
             cursor: pointer;
-            transform-origin: center;
+            transform: translate(-50%);
             margin-top: 0%;
             z-index: 5;
+            
         }
         .small-triangle {
             width: 0;
             height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
-            border-bottom: 30px solid #6200ea;
+            border-bottom: 30px solid #84A98C;
             position: absolute;
             animation: fly 1s linear forwards;
             z-index: 0;
+            pointer-events: none;
         }
         @keyframes spin {
             from {
@@ -61,7 +63,7 @@
         }
         .shop {
             position: absolute;
-            right: 20px;
+            right: -7px;
             top: 50px;
             width: 300px;
             background-color: #ffffff;
@@ -69,26 +71,29 @@
             padding: 20px;
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
         .shop-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #6200ea;
+            background-color: #64906E;
             color: #ffffff;
             border: 4px solid #000;
             border-radius: 0;
             padding: 10px;
             margin-top: 10px;
-            font-size: 18px;
+            
             cursor: pointer;
+            border-radius: 10px;
         }
         .shop-item:hover {
-            background-color: #3700b3;
+            background-color: #4B6C53;
         }
         .shop-item span {
             flex: 1;
             text-align: left;
+            font-size: 12px;
         }
         .shop-item img {
             width: 24px;
@@ -102,6 +107,7 @@
             border-radius: 0;
             padding: 5px;
             cursor: pointer;
+            border-radius: 10px;
         }
         .shop-item button:hover {
             background-color: #e0e0e0;
@@ -118,11 +124,21 @@
         display: none; 
         font-size: 12px; 
     }
+
+    .amount {
+      font-size: 20;
+    }
+
+    
     </style>
     <!-- Link to Google Fonts for pixel art font -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div style="top:1vh; position: absolute;">
+    <p id="achivement-name"> </p>
+    <p id="achivement-def"> </p>
+  </div>
     <div class="game-container">
         <img src="images/donut.png" class="donut-image" onclick="incrementMoney(); createTriangles()" alt="Spinning Donut">
         <div class="money" id="money">Money: 0</div>
@@ -130,16 +146,20 @@
     <div class="shop" id="shop">
         <div class="shop-item" onclick="buyItem('item1', 10)">
             <img src="images/donut.png" alt="Item 1 Icon">
-            <span>Buy Item 1</span>
-            <button>$10</button>
+            <span>Blueberry Donuts</span>
+            <div class="amount" style="font-size: 20;">
+              <span id="item">0</span>
+            </div>
         </div>
         <div class="shop-item" onclick="buyAutoClicker()">
             <img src="images/donut.png" alt="Auto-Clicker Icon">
-            <span>Buy Auto-Clicker</span>
-            <button>$50</button>
+            <span>Donut Fryer</span>
+            <div class="amount">
+              <span id="fryer">0</span>
+            </div>
         </div>
     </div>
-    <p id="a1"></p>
+
     <script>
         let money = 0;
         let autoClickers = 0;
@@ -147,6 +167,7 @@
         function incrementMoney() {
             money++;
             document.getElementById('money').innerText = 'Money: ' + money;
+            achivement();
         }
 
         function showNotification(message) { 
@@ -161,6 +182,7 @@
                 money -= cost;
                 document.getElementById('money').innerText = 'Money: ' + money;
                 alert(item + ' purchased!');
+                document.getElementById("item").innerHTML = 0;
             } else {
                 alert('Not enough points!');
             }
@@ -174,6 +196,7 @@
                 document.getElementById('money').innerText = 'Money: ' + money;
                 alert('Auto-Clicker purchased!');
                 startAutoClicker();
+                document.getElementById("fryer").innerHTML = autoClickers;
             } else {
                 showNotification('Not enough points!');
             }
@@ -193,18 +216,29 @@
                 smallTriangle.src = "donut.png";
                 smallTriangle.classList.add('small-triangle');
                 const angle = Math.random() * 360;
-                const distance = 100 + Math.random() * 100;
+                const distance = 200 + Math.random() * 100;
                 smallTriangle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
                 smallTriangle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
-                smallTriangle.style.left = `calc(50% - 15px)`; 
-                smallTriangle.style.top = `calc(50% - 15px)`; 
+                smallTriangle.style.left = `calc(49%)`; 
+                smallTriangle.style.top = `calc(35%)`; 
+                smallTriangle.style.zIndex = -5;
                 gameContainer.appendChild(smallTriangle);
                 setTimeout(() => gameContainer.removeChild(smallTriangle), 1000);
             }
         } 
-if (money >= 10) { 
-  document.getElementById("a1").innerText = "The variable is exactly 10!"; 
-} 
+
+        function achivement() {
+          if (money == 10 || money == 15 || money == 20) { 
+              document.getElementById("achivement-name").innerHTML = "Achivement Unlocked!";
+              document.getElementById("achivement-def").innerHTML = "Collect " + money + " Donuts.";
+              setTimeout(function(){
+                document.getElementById("achivement-name").innerHTML = " ";
+                document.getElementById("achivement-def").innerHTML = " ";
+              }, 2000)
+            } 
+        }
+      
+
 
     </script>
 </body>
