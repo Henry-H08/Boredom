@@ -146,10 +146,11 @@
     <div class="shop" id="shop">
         <div class="shop-item" onclick="buyItem('item1', 10)">
             <img src="images/donut.png" alt="Item 1 Icon">
-            <span>Blueberry Donuts</span>
+            <span id="itemText">Blueberry Donuts</span>
             <div class="amount" style="font-size: 20;">
               <span id="item">0</span>
             </div>
+            
         </div>
         <div class="shop-item" onclick="buyAutoClicker()">
             <img src="images/donut.png" alt="Auto-Clicker Icon">
@@ -163,9 +164,14 @@
     <script>
         let money = 0;
         let autoClickers = 0;
+        let donutsPer = 1;
+        let items = 0;
+        let itemCost = 1000;
+
+        document.getElementById('itemText').innerText = '$' + itemCost + ' Bluberry Donuts';
 
         function incrementMoney() {
-            money++;
+            money += donutsPer;
             document.getElementById('money').innerText = 'Money: ' + money;
             achivement();
         }
@@ -180,11 +186,14 @@
         function buyItem(item, cost) {
             if (money >= cost) {
                 money -= cost;
+                items ++;
                 document.getElementById('money').innerText = 'Money: ' + money;
-                alert(item + ' purchased!');
-                document.getElementById("item").innerHTML = 0;
+                document.getElementById("item").innerHTML = items;
+                donutsPer += 1;
+                itemCost *= 4;
+                document.getElementById('itemText').innerText = '$' + itemCost + ' Bluberry Donuts';
             } else {
-                alert('Not enough points!');
+                showNotification('Not enough points!');
             }
         }
 
@@ -194,7 +203,6 @@
                 money -= cost;
                 autoClickers++;
                 document.getElementById('money').innerText = 'Money: ' + money;
-                alert('Auto-Clicker purchased!');
                 startAutoClicker();
                 document.getElementById("fryer").innerHTML = autoClickers;
             } else {
