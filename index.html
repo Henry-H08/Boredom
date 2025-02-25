@@ -146,7 +146,8 @@
     <div class="shop" id="shop">
         <div class="shop-item" onclick="buyItem('item1', 10)">
             <img src="images/donut.png" alt="Item 1 Icon">
-            <span id="itemText">Blueberry Donuts</span>
+            <span>Bluberry Donuts</span>
+            <span id="itemText"> </span>
             <div class="amount" style="font-size: 20;">
               <span id="item">0</span>
             </div>
@@ -160,15 +161,16 @@
             </div>
         </div>
     </div>
+    <li><a href="tests/test.html" title="">test</a></li>
 
     <script>
         let money = 0;
         let autoClickers = 0;
         let donutsPer = 1;
-        let items = 0;
-        let itemCost = 1000;
+        let  = 0;
+        let itemCost = 10;
 
-        document.getElementById('itemText').innerText = '$' + itemCost + ' Bluberry Donuts';
+        document.getElementById('itemText').innerText = '$' + itemCost;
 
         function incrementMoney() {
             money += donutsPer;
@@ -191,7 +193,7 @@
                 document.getElementById("item").innerHTML = items;
                 donutsPer += 1;
                 itemCost *= 4;
-                document.getElementById('itemText').innerText = '$' + itemCost + ' Bluberry Donuts';
+                document.getElementById('itemText').innerText = '$' + itemCost;
             } else {
                 showNotification('Not enough points!');
             }

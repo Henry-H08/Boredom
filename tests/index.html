@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FontGuessr</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            gap: 50px;
+        }
+        .sample-text {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        .font-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .font-list div {
+            margin: 5px 0;
+        }
+        .answer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="font-list">
+            <div>Arial</div>
+            <div>Times New Roman</div>
+            <div>Courier New</div>
+            <div>Georgia</div>
+            <div>Verdana</div>
+            <div>Tahoma</div>
+            <div>Trebuchet MS</div>
+            <div>Impact</div>
+            <div>Comic Sans MS</div>
+            <div>Lucida Console</div>
+            <div>Lucida Sans Unicode</div>
+            <div>Palatino Linotype</div>
+            <div>Garamond</div>
+            <div>Book Antiqua</div>
+            <div>Arial Black</div>
+        </div>
+        <div>
+            <div class="sample-text" id="sampleText">Guess the font!</div>
+            <div class="answer">
+                <input type="text" id="fontGuess" placeholder="Type your guess here" />
+                <button onclick="checkGuess()">Submit Guess</button>
+            </div>
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const fonts = ['Arial', 'Times New Roman', 'Courier New', 'Georgia', 'Verdana', 'Tahoma', 'Trebuchet MS', 'Impact', 'Comic Sans MS', 'Lucida Console', 'Lucida Sans Unicode', 'Palatino Linotype', 'Garamond', 'Book Antiqua', 'Arial Black'];
+        let selectedFont;
+
+        function randomizeFont() {
+            selectedFont = fonts[Math.floor(Math.random() * fonts.length)];
+            document.getElementById('sampleText').style.fontFamily = selectedFont;
+        }
+
+        function checkGuess() {
+            const guess = document.getElementById('fontGuess').value.toLowerCase();
+            const result = document.getElementById('result');
+            if (guess === selectedFont.toLowerCase()) {
+                result.textContent = 'Correct!';
+                result.style.color = 'green';
+            } else {
+                result.textContent = 'Wrong! The correct font was ' + selectedFont;
+                result.style.color = 'red';
+            }
+            setTimeout(() => {
+                result.textContent = '';
+                document.getElementById('fontGuess').value = '';
+                randomizeFont();
+            }, 2000);
+        }
+
+        randomizeFont();
+    </script>
+</body>
+</html>
