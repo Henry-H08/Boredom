@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BLE Servo Control</title>
+    <title>ESP32 Servo Control</title>
     <style>
         body { 
             text-align: center; 
@@ -9,81 +9,32 @@
             margin: 20px;
         }
         .slider {
-            width: 80%;
-            max-width: 300px;
+            width: 300px;
             height: 40px;
-        }
-        #status {
-            margin: 10px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .connected {
-            background-color: #90EE90;
-        }
-        .disconnected {
-            background-color: #FFB6C1;
         }
     </style>
 </head>
 <body>
     <h2>ESP32 Servo Control</h2>
-    <div id="status" class="disconnected">Disconnected</div>
-    <button onclick="connect()">Connect to ESP32</button>
+    <button onclick="connect()">Connect</button>
     <br><br>
     <input type="range" min="0" max="180" value="90" class="slider" id="servoSlider" disabled>
     <p>Angle: <span id="value">90</span>°</p>
-    <p>Last sent: <span id="lastSent">-</span>°</p>
 
     <script>
         let characteristic;
-        let isConnected = false;
         const slider = document.getElementById('servoSlider');
         const output = document.getElementById('value');
-        const lastSent = document.getElementById('lastSent');
-        const status = document.getElementById('status');
-        let sendTimeout;
 
-        slider.oninput = function() {
+        slider.oninput = async function() {
             output.innerHTML = this.value;
-            
-            // Clear any pending timeout
-            if (sendTimeout) {
-                clearTimeout(sendTimeout);
-            }
-            
-            // Set new timeout to send value
-            sendTimeout = setTimeout(() => {
-                sendValue(this.value);
-            }, 50); // 50ms delay to prevent flooding
-        }
-
-        async function sendValue(value) {
-            if (characteristic && isConnected) {
-                try {
-                    await characteristic.writeValue(new TextEncoder().encode(value));
-                    lastSent.innerHTML = value;
-                } catch (error) {
-                    console.error('Error sending value:', error);
-                    disconnect();
-                }
-            }
-        }
-
-        function updateConnectionStatus(connected) {
-            isConnected = connected;
-            status.className = connected ? 'connected' : 'disconnected';
-            status.textContent = connected ? 'Connected' : 'Disconnected';
-            slider.disabled = !connected;
-            if (!connected) {
-                lastSent.innerHTML = '-';
-            }
-        }
-
-        function disconnect() {
-            updateConnectionStatus(false);
             if (characteristic) {
-                characteristic = null;
+                try {
+                    await characteristic.writeValue(new TextEncoder().encode(this.value));
+                } catch (error) {
+                    console.error('Error:', error);
+                    slider.disabled = true;
+                }
             }
         }
 
@@ -96,20 +47,14 @@
                     optionalServices: ['4fafc201-1fb5-459e-8fcc-c5c9c331914b']
                 });
 
-                device.addEventListener('gattserverdisconnected', disconnect);
-
                 const server = await device.gatt.connect();
                 const service = await server.getPrimaryService('4fafc201-1fb5-459e-8fcc-c5c9c331914b');
                 characteristic = await service.getCharacteristic('beb5483e-36e1-4688-b7f5-ea07361b26a8');
                 
-                updateConnectionStatus(true);
-                
-                // Send initial position
-                sendValue(slider.value);
+                slider.disabled = false;
+                alert('Connected!');
             } catch(error) {
-                console.error('Connection failed:', error);
                 alert('Connection failed: ' + error);
-                disconnect();
             }
         }
     </script>
